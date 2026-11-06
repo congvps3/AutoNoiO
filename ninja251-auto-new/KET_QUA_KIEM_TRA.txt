@@ -1,0 +1,15 @@
+Ninja 251 AUTO NEW v1 - verification scope
+
+PASS: ZIP/class structure; 323 classes, no duplicate method signatures.
+PASS: ASM BasicVerifier across the 259 wrapped methods and patched game methods.
+PASS: real MICRO_NST MIDlet preprocessor loads all Nso helpers, including Swing listeners; reflection resolves their method/field descriptors.
+PASS: preflight checks exact auto manifest and trace-file writing without starting the game.
+PASS: actual game startup and paint in MICRO_NST headless mode with all network access denied.
+PASS: real obfuscated field lookup, accented NPC menu selection and original button callback, original text widget input, character field bindings.
+PASS: adapter refuses automatic input for verification-code field 20065.
+PASS: simulated full registration flow, explicit server-success requirement, manual-code pause, one attempt/no duplicate requests, server rejection, timeout, cancel, account-confirmed state retained after later login timeout.
+
+PASS: launcher shell scenarios: missing dependencies, emulator precedence, failed preflight blocks launch, Unicode paths, separate log files, exit codes. Windows CMD quoting/CRLF checked statically.
+
+NOT TESTED: Windows/Swing GUI interaction and live registration against the game server.
+No real accounts were created during these tests. User video, log and credentials are excluded from this package.
