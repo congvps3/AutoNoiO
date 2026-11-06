@@ -1,11 +1,13 @@
-Ninja 251 AUTO NEW v3 - compact form update
+Ninja 251 AUTO NEW v4 - confirmed-account export and validation feedback
 
-Changes: removed all instructional text above the form; shortened field labels; 44 px preferred/minimum input height; 18 pt input font; 44 px buttons; 560x370 minimum window size.
-The registration flow and F6 shortcut are inherited from v2.
+Changes: Vietnamese field-specific input errors; preserve the password field for rejected starts; log button requests and validation rejection; append confirmed account names and local timestamps to tai-khoan-da-dang-ky.txt beside the trace. UTF8 BOM, tab-separated columns, CRLF. Existing records are preserved. Passwords are not exported.
+Records are added only at the explicit registration-success acknowledgement after manual verification, before reconnect/login/final-character creation. Rejected or merely submitted attempts produce no account record. Save errors report that the account was confirmed but the file was not saved.
 
-PASS: Java 8 target compilation, compatibility conversion for the actual emulator, JAR/class structure (325 classes).
-PASS: real MICRO_NST preprocessor loads all auto helper classes and resolves their method/field descriptors; v3 manifest and trace-file writing checked by preflight.
-PASS: shell launcher syntax. Windows CMD uses CRLF and quoted paths inherited from v2.
+PASS: updated workflow replay including save-once after acknowledgement, never save rejected/invalid attempts, later-login failure preservation, save failure without false registration failure, exact invalid-character field validation, manual verification pause, no automatic retries.
+PASS: store tests covering UTF8/BOM, Unicode path beside trace, append/preservation, no password, record injection rejection and write-failure propagation.
+PASS: real uploaded MICRO_NST with network denied: original game boot/paint, active screen, actual menu/input callbacks, Vietnamese validation labels, result-file creation and a synthetic fixture appended through the real MIDlet preprocessor. No real accounts created.
+PASS: Java 8 target compilation, legacy-compatible helpers, archive structure (326 classes), wrapped-game bytecode analysis, v4 checker/preprocessor load.
+PASS: launcher shell syntax; CMD quoting and CRLF inherited from v3.
 
-Earlier v2 regression verification remains documented in Git history. A live Windows screenshot/render of this UI change and a live game-server registration have not been tested here.
-User video, logs and credentials are excluded from this package.
+NOT TESTED HERE: Windows GUI interaction and live game-server registration. Account-write checks used synthetic fixtures only, excluded from the package.
+User log/video/credentials and personal account-result files are not included.
