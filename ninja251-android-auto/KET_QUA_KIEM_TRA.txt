@@ -1,0 +1,13 @@
+Ninja 251 Android Auto v6 - offline verification scope
+
+Separate MIDP/CLDC variant: no Swing/AWT, Java SE File, reflection or regex. Native MIDP menu; first-login deferred entry, # hold fallback; JSR75 TXT browser/manual URL plus native paste editor; RMS account/log persistence, safe UTF8 export and append.
+
+PASS: normalized original game members: fields disambiguated; only return-type-ambiguous method groups aliased; inherited Java IO/Vector/Hashtable and MIDP/Runnable API overrides preserved. ASM analyzes all rewritten game and helper methods.
+PASS: production compilation against actual emulator MIDP APIs plus JSR75 compile-only interfaces; no API stand-ins packaged.
+PASS: original game startup through the exact supplied MICRO_NST in headless mode, -Xverify:all, network denied.
+PASS: original FiX create action through synthetic service recorder sends male=1, appearance=2, school=1 (Kiem). Typed bridge logout reaches disconnected New Game. Original font renderer captures synthetic verification code.
+PASS: finite two-account core test with fake bridge: observed code only, explicit success before save, logout/connection gate, next random temporary name, error cleanup, cancellation/password references cleared, storage error stops and full-list duplicate/format validation.
+PASS: RMS/FileConnection fixture tests: account dedupe, preservation, UTF8+BOM, export/append/failure recovery, bounded logs, strict TXT input and safe refusal to overwrite unrelated source files.
+PASS: release archive validation: no javax/java API stand-ins, host probes, test fixtures, user videos/logs, input lists or private account exports included.
+
+NOT TESTED: Android/J2ME Loader device execution, Android storage/keyboard/UI interactions or live game-server registration. Test service recorder never contacts the server; fixtures contain only synthetic test data.
