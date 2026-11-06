@@ -1,15 +1,17 @@
-Ninja 251 AUTO NEW v1 - verification scope
+Ninja 251 AUTO NEW v2 - verification scope
 
-PASS: ZIP/class structure; 323 classes, no duplicate method signatures.
-PASS: ASM BasicVerifier across the 259 wrapped methods and patched game methods.
-PASS: real MICRO_NST MIDlet preprocessor loads all Nso helpers, including Swing listeners; reflection resolves their method/field descriptors.
-PASS: preflight checks exact auto manifest and trace-file writing without starting the game.
-PASS: actual game startup and paint in MICRO_NST headless mode with all network access denied.
-PASS: real obfuscated field lookup, accented NPC menu selection and original button callback, original text widget input, character field bindings.
-PASS: adapter refuses automatic input for verification-code field 20065.
-PASS: simulated full registration flow, explicit server-success requirement, manual-code pause, one attempt/no duplicate requests, server rejection, timeout, cancel, account-confirmed state retained after later login timeout.
+FIX: v1 read the outer Canvas renderer (NBAFgUXWGCkgPq) as the current game screen, so it never recognized New Game and never opened the controls.
+v2 reads the actual active XZRZEVaKAwWG screen held by the game root. This applies to login, character creation/list and world recognition.
 
-PASS: launcher shell scenarios: missing dependencies, emulator precedence, failed preflight blocks launch, Unicode paths, separate log files, exit codes. Windows CMD quoting/CRLF checked statically.
+PASS: reproduced v1 failure in the exact uploaded MICRO_NST, then the same regression check passed on v2. The actual login screen is identified as LOGIN.
+PASS: F6 key recognition accepts key-pressed F6, rejects release and unrelated game keys. Live keyboard dispatch/window display still requires Windows testing.
+PASS: actual game boot and paint in headless MICRO_NST, all network access denied. Trace includes AUTO_ENGINE_READY build=auto-new-v2 and AUTO_SCREEN pNpEFjPucSSVu.
+PASS: archive/class structure, 325 classes, no duplicate method signatures.
+PASS: ASM bytecode verifier, 1217 methods in 24 patched classes, 259 trace wrappers.
+PASS: actual MIDlet preprocessor loads all auto helpers and their field/method descriptors; preflight checks game v2 and trace writing.
+PASS: actual accented-menu selection/index/button callback, original input widget and callback, character field bindings. Auto code entry in field 20065 is rejected.
+PASS: simulated full registration workflow, pause for human verification, explicit server success required, one attempt without automatic retries, failures/timeouts/cancel, registration-confirmed status retained if later login fails.
+PASS: 9 shell launcher scenarios, including failed preflight blocking launch, missing files, Unicode folder paths, log separation and process exit codes. Windows CMD quoting and CRLF checked statically.
 
-NOT TESTED: Windows/Swing GUI interaction and live registration against the game server.
-No real accounts were created during these tests. User video, log and credentials are excluded from this package.
+NOT TESTED: Windows/Swing UI interaction, real F6 key events from Windows, and live game-server registration.
+No real accounts were created during testing. User video, user logs and credentials are excluded.
