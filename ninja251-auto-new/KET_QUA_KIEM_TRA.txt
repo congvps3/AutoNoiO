@@ -1,13 +1,15 @@
-Ninja 251 AUTO NEW v4 - confirmed-account export and validation feedback
+Ninja 251 AUTO NEW v5 - finite registration queue
 
-Changes: Vietnamese field-specific input errors; preserve the password field for rejected starts; log button requests and validation rejection; append confirmed account names and local timestamps to tai-khoan-da-dang-ky.txt beside the trace. UTF8 BOM, tab-separated columns, CRLF. Existing records are preserved. Passwords are not exported.
-Records are added only at the explicit registration-success acknowledgement after manual verification, before reconnect/login/final-character creation. Rejected or merely submitted attempts produce no account record. Save errors report that the account was confirmed but the file was not saved.
+Features: multi-row account/password/final-character table, masked password cells, pipe/TSV clipboard import, full-list validation; new random temporary character after each processed row; currently rendered verification text capture and single code submission; final-character world confirmation then logout to disconnected New Game; one-second gap between rows; recovery after failed rows; stop on result-file errors or failed cleanup. Confirmed-account export remains append-only.
 
-PASS: updated workflow replay including save-once after acknowledgement, never save rejected/invalid attempts, later-login failure preservation, save failure without false registration failure, exact invalid-character field validation, manual verification pause, no automatic retries.
-PASS: store tests covering UTF8/BOM, Unicode path beside trace, append/preservation, no password, record injection rejection and write-failure propagation.
-PASS: real uploaded MICRO_NST with network denied: original game boot/paint, active screen, actual menu/input callbacks, Vietnamese validation labels, result-file creation and a synthetic fixture appended through the real MIDlet preprocessor. No real accounts created.
-PASS: Java 8 target compilation, legacy-compatible helpers, archive structure (326 classes), wrapped-game bytecode analysis, v4 checker/preprocessor load.
-PASS: launcher shell syntax; CMD quoting and CRLF inherited from v3.
+PASS: pure workflow tests including manual fallback and automatic code submission once, explicit registration acknowledgement before saving, final-character verification and logout.
+PASS: two-account replay; next row blocked until LOGIN plus disconnected session; regenerated temporary names; per-row outcomes/progress; failure recovery; cancellation and secret clearing; whole-list duplicate/format validation; stop on storage errors.
+PASS: visible-text parser requires current challenge title and a six-character token; expiry/reset; rejects overlong/ambiguous tokens.
+PASS: actual uploaded MICRO_NST with network disabled: original game startup/paint; overloaded screen/menu/input bindings; original session logout reaches disconnected New Game; synthetic code captured through original font renderer and filled using original input widget/callback. Synthetic callback never sends an account request.
+PASS: pipe/TSV parser and readable validation labels loaded through the actual emulator.
+PASS: account file UTF8/BOM, Unicode trace-relative paths, append/preservation, no password, malformed record rejection and write-error propagation.
+PASS: 339-class JAR structure, no duplicate method signatures; Java 8 target helper compilation and legacy conversion; real preprocessor loads all auto classes; game wrapper bytecode checks (1229 methods, 25 patched classes, 261 wrappers).
+PASS: 9 launcher mock scenarios; real preflight success, wrong-JAR rejection, unwritable trace rejection; shell syntax and CMD quoting/CRLF.
 
-NOT TESTED HERE: Windows GUI interaction and live game-server registration. Account-write checks used synthetic fixtures only, excluded from the package.
-User log/video/credentials and personal account-result files are not included.
+NOT TESTED HERE: Windows UI interactions, actual clipboard/keyboard events on Windows, and live game-server registration. Rendering/input and account-file tests used synthetic fixtures only.
+No real accounts were created. User videos/logs, credentials and private result files are excluded from the ZIP and repository commit.
