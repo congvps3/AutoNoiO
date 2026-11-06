@@ -17,6 +17,10 @@ if [ ! -f 251_Love_Atun_PC_LOG_v2.jar ]; then
   echo 'Can 251_Love_Atun_PC_LOG_v2.jar. Hay giai nen du bo ZIP v2.' >&2
   exit 1
 fi
+if [ ! -f NST_TRACE_CHECK.jar ]; then
+  echo 'Can NST_TRACE_CHECK.jar. Hay giai nen du bo ZIP danh cho MICRO_NST.' >&2
+  exit 1
+fi
 NSO_TRACE_PATH="$(pwd)/dang-ky.log"
 echo "Gia lap: $NSO_EMULATOR_JAR"
 echo 'Game phai co ten 251 PC LOG v2; neu khong, vao File va mo dung JAR v2.'
@@ -24,8 +28,14 @@ echo 'Hai tep dang-ky.log va gia-lap-console.log se bi ghi de.'
 printf 'NSO_TRACE_RUNNER build=pc-file-v2 emulator=%s\nWAITING_FOR_TRACE_STARTED\n' "$NSO_EMULATOR_JAR" > "$NSO_TRACE_PATH"
 printf 'NSO_EMULATOR_CONSOLE build=pc-file-v2\n' > gia-lap-console.log
 java -version >> gia-lap-console.log 2>&1
+echo 'Dang kiem tra bo nap va quyen ghi tep, chua khoi dong game...'
+if ! java -jar NST_TRACE_CHECK.jar "$NSO_EMULATOR_JAR" 251_Love_Atun_PC_LOG_v2.jar "$NSO_TRACE_PATH" >> gia-lap-console.log 2>&1; then
+  echo 'KIEM TRA CHUA DAT. Gui dang-ky.log va gia-lap-console.log; chua can dang ky thu.'
+  exit 1
+fi
+echo 'KIEM TRA DA DAT: bo nap va quyen ghi tep hoat dong.'
 set +e
-java -Dfile.encoding=UTF-8 "-Dnso.trace.file=$NSO_TRACE_PATH" -jar "$NSO_EMULATOR_JAR" 251_Love_Atun_PC_LOG_v2.jar >> gia-lap-console.log 2>&1
+java -Dfile.encoding=UTF-8 "-Dnso.trace.file=$NSO_TRACE_PATH" -jar "$NSO_EMULATOR_JAR" --openjar 251_Love_Atun_PC_LOG_v2.jar >> gia-lap-console.log 2>&1
 NSO_EXIT_CODE=$?
 set -e
 if grep -Fq 'TRACE_STARTED build=pc-file-v2' "$NSO_TRACE_PATH"; then
