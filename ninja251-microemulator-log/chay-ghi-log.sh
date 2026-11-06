@@ -13,8 +13,8 @@ else
   echo 'Can MICRO_NST.jar hoac microemulator.jar trong thu muc nay.' >&2
   exit 1
 fi
-if [ ! -f 251_Love_Atun_PC_LOG_v2.jar ]; then
-  echo 'Can 251_Love_Atun_PC_LOG_v2.jar. Hay giai nen du bo ZIP v2.' >&2
+if [ ! -f 251_Love_Atun_PC_LOG_v3.jar ]; then
+  echo 'Can 251_Love_Atun_PC_LOG_v3.jar. Hay giai nen du bo ZIP v3.' >&2
   exit 1
 fi
 if [ ! -f NST_TRACE_CHECK.jar ]; then
@@ -23,24 +23,24 @@ if [ ! -f NST_TRACE_CHECK.jar ]; then
 fi
 NSO_TRACE_PATH="$(pwd)/dang-ky.log"
 echo "Gia lap: $NSO_EMULATOR_JAR"
-echo 'Game phai co ten 251 PC LOG v2; neu khong, vao File va mo dung JAR v2.'
+echo 'Vao File mo 251_Love_Atun_PC_LOG_v3.jar, chon 251 PC LOG v3 va Start mot lan.'
 echo 'Hai tep dang-ky.log va gia-lap-console.log se bi ghi de.'
-printf 'NSO_TRACE_RUNNER build=pc-file-v2 emulator=%s\nWAITING_FOR_TRACE_STARTED\n' "$NSO_EMULATOR_JAR" > "$NSO_TRACE_PATH"
-printf 'NSO_EMULATOR_CONSOLE build=pc-file-v2\n' > gia-lap-console.log
+printf 'NSO_TRACE_RUNNER build=pc-file-v3 emulator=%s\nWAITING_FOR_UI_READY\n' "$NSO_EMULATOR_JAR" > "$NSO_TRACE_PATH"
+printf 'NSO_EMULATOR_CONSOLE build=pc-file-v3\n' > gia-lap-console.log
 java -version >> gia-lap-console.log 2>&1
 echo 'Dang kiem tra bo nap va quyen ghi tep, chua khoi dong game...'
-if ! java -jar NST_TRACE_CHECK.jar "$NSO_EMULATOR_JAR" 251_Love_Atun_PC_LOG_v2.jar "$NSO_TRACE_PATH" >> gia-lap-console.log 2>&1; then
+if ! java -jar NST_TRACE_CHECK.jar "$NSO_EMULATOR_JAR" 251_Love_Atun_PC_LOG_v3.jar "$NSO_TRACE_PATH" >> gia-lap-console.log 2>&1; then
   echo 'KIEM TRA CHUA DAT. Gui dang-ky.log va gia-lap-console.log; chua can dang ky thu.'
   exit 1
 fi
 echo 'KIEM TRA DA DAT: bo nap va quyen ghi tep hoat dong.'
 set +e
-java -Dfile.encoding=UTF-8 "-Dnso.trace.file=$NSO_TRACE_PATH" -jar "$NSO_EMULATOR_JAR" --openjar 251_Love_Atun_PC_LOG_v2.jar >> gia-lap-console.log 2>&1
+java -Dfile.encoding=UTF-8 "-Dnso.trace.file=$NSO_TRACE_PATH" -jar "$NSO_EMULATOR_JAR" >> gia-lap-console.log 2>&1
 NSO_EXIT_CODE=$?
 set -e
-if grep -Fq 'TRACE_STARTED build=pc-file-v2' "$NSO_TRACE_PATH"; then
-  echo 'DA NHAN TRACE_STARTED: ban game co log da khoi dong.'
+if grep -Fq 'TRACE_UI_READY build=pc-file-v3' "$NSO_TRACE_PATH"; then
+  echo 'DA NHAN TRACE_UI_READY: man hinh game da ve xong.'
 else
-  echo 'CHUA XAC NHAN ban game co log. Vao File va mo dung JAR v2.'
+  echo 'CHUA XAC NHAN ban game co log. Vao File va mo dung JAR v3.'
 fi
 exit "$NSO_EXIT_CODE"

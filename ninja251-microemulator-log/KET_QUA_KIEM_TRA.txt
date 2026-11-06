@@ -1,15 +1,7 @@
-MICRO_NST COMPATIBILITY CHECK
-
-Uploaded emulator SHA-256: e4f11193e42309a9ce19c766be00b7e01d75eb194526e545e3f4f54b43cdb6a3
-Diagnosis: ChangeCallsMethodVisitor rewrites System.out/err to Injected;
-MIDletOutputStreamRedirector.println(String) calls Logger.info/error;
-those Logger methods are no-ops in the supplied emulator.
-
-PASS: the exact emulator's MIDletClassLoader and class preprocessor were used.
-PASS: v2 startup/event/packet logging and input-string omission after preprocessing.
-PASS: suppressed stdout reproduced using a minimal println probe.
-PASS: 311 actual game classes loaded with initialize=false.
-PASS: NST_TRACE_CHECK.jar writes TRACE_LOADER_READY through the actual loader.
-
-No real account created. No game-server connection performed. Windows GUI not tested.
-The uploaded emulator is not included in this package; use your existing MICRO_NST.jar.
+PC LOG v3 regression verification
+- Original lifecycle methods retained; startApp changes only its Display getter call.
+- Actual game started with uploaded MICRO_NST in headless mode, network disabled.
+- Display obtained and game paint completed (TRACE_DISPLAY_READY and TRACE_UI_READY).
+- Original Display.getDisplay NPE reproduced by removing its MIDlet registration.
+- Correct active context restored; foreign/empty context rejected.
+- Windows GUI and game-server registration have not been tested.

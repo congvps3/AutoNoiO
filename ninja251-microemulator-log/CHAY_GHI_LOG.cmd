@@ -15,9 +15,9 @@ if not defined NSO_EMULATOR_JAR (
   pause
   exit /b 1
 )
-if not exist "251_Love_Atun_PC_LOG_v2.jar" (
-  echo Khong tim thay 251_Love_Atun_PC_LOG_v2.jar.
-  echo Hay giai nen du bo ZIP v2, khong chi thay rieng file CMD.
+if not exist "251_Love_Atun_PC_LOG_v3.jar" (
+  echo Khong tim thay 251_Love_Atun_PC_LOG_v3.jar.
+  echo Hay giai nen du bo ZIP v3, khong chi thay rieng file CMD.
   pause
   exit /b 1
 )
@@ -27,16 +27,17 @@ if not exist "NST_TRACE_CHECK.jar" (
   exit /b 1
 )
 echo Gia lap: %NSO_EMULATOR_JAR%
-echo Game phai co ten: 251 PC LOG v2
-echo Neu van hien 251 cu, vao File va mo 251_Love_Atun_PC_LOG_v2.jar.
+echo Trong gia lap, vao File va mo 251_Love_Atun_PC_LOG_v3.jar.
+echo Sau do chon 251 PC LOG v3 va nhan Start mot lan.
+echo Neu van hien 251 cu, vao File va mo 251_Love_Atun_PC_LOG_v3.jar.
 echo Luong game ghi truc tiep vao dang-ky.log; console gia lap o gia-lap-console.log.
 echo Moi lan chay se ghi de hai tep log cu.
-echo NSO_TRACE_RUNNER build=pc-file-v2 emulator=%NSO_EMULATOR_JAR% > "dang-ky.log"
-echo WAITING_FOR_TRACE_STARTED - chon 251 PC LOG v2 va nhan Start. >> "dang-ky.log"
-echo NSO_EMULATOR_CONSOLE build=pc-file-v2 > "gia-lap-console.log"
+echo NSO_TRACE_RUNNER build=pc-file-v3 emulator=%NSO_EMULATOR_JAR% > "dang-ky.log"
+echo WAITING_FOR_UI_READY - chon 251 PC LOG v3 va nhan Start. >> "dang-ky.log"
+echo NSO_EMULATOR_CONSOLE build=pc-file-v3 > "gia-lap-console.log"
 java -version >> "gia-lap-console.log" 2>&1
 echo Dang kiem tra bo nap va quyen ghi tep, chua khoi dong game...
-java -jar "NST_TRACE_CHECK.jar" "%NSO_EMULATOR_JAR%" "251_Love_Atun_PC_LOG_v2.jar" "%~dp0dang-ky.log" >> "gia-lap-console.log" 2>&1
+java -jar "NST_TRACE_CHECK.jar" "%NSO_EMULATOR_JAR%" "251_Love_Atun_PC_LOG_v3.jar" "%~dp0dang-ky.log" >> "gia-lap-console.log" 2>&1
 if errorlevel 1 (
   echo KIEM TRA CHUA DAT. Mo gia-lap-console.log de xem ly do.
   echo Gui ca hai tep log de kiem tra, chua can dang ky thu.
@@ -44,14 +45,14 @@ if errorlevel 1 (
   exit /b 1
 )
 echo KIEM TRA DA DAT: gia lap nap duoc game va ghi duoc tep.
-java -Dfile.encoding=UTF-8 "-Dnso.trace.file=%~dp0dang-ky.log" -jar "%NSO_EMULATOR_JAR%" --openjar "251_Love_Atun_PC_LOG_v2.jar" >> "gia-lap-console.log" 2>&1
+java -Dfile.encoding=UTF-8 "-Dnso.trace.file=%~dp0dang-ky.log" -jar "%NSO_EMULATOR_JAR%" >> "gia-lap-console.log" 2>&1
 set "NSO_EXIT_CODE=%ERRORLEVEL%"
-findstr /L /C:"TRACE_STARTED build=pc-file-v2" "dang-ky.log" >nul 2>&1
+findstr /L /C:"TRACE_UI_READY build=pc-file-v3" "dang-ky.log" >nul 2>&1
 if errorlevel 1 (
-  echo CHUA XAC NHAN duoc ban game co log da Start.
-  echo Lan sau vao File va mo dung 251_Love_Atun_PC_LOG_v2.jar.
+  echo CHUA XAC NHAN man hinh game da ve xong.
+  echo Lan sau vao File va mo dung 251_Love_Atun_PC_LOG_v3.jar.
 ) else (
-  echo DA NHAN TRACE_STARTED: ban game co log da khoi dong.
+  echo DA NHAN TRACE_UI_READY: man hinh game da ve xong.
 )
 echo Ma thoat Java: %NSO_EXIT_CODE%
 echo Hay gui dang-ky.log va gia-lap-console.log kem thong bao ket qua.

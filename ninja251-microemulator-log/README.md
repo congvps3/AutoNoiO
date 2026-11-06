@@ -1,91 +1,63 @@
-# Ninja School 251 — bộ ghi log đã kiểm tra với MICRO_NST
+# Ninja 251 — MICRO_NST PC LOG v3
 
-Bản sửa cho trường hợp `dang-ky.log` chỉ có thông tin Java và không có sự kiện.
-Game ghi trực tiếp qua FileOutputStream; hoạt động độc lập với System.out/err.
-Đã phân tích MICRO_NST.jar do người dùng cung cấp: Logger.info/error bị làm thành
-hàm rỗng, còn MIDletOutputStreamRedirector đưa println của game vào các hàm này.
-Đây là nguyên nhân bản stdout không sinh dòng trace. Bản game v2 ghi trực tiếp.
-Đã nạp kiểm tra 311 lớp game qua chính bộ nạp thật của MICRO_NST, chưa khởi tạo game
-thật/kết nối máy chủ. Các phép thử startup/event/packet dùng game giả để kiểm tra logger.
+Sửa lỗi lấy màn hình khi MIDletBridge không tìm thấy đăng ký MIDlet đang khởi động.
+Bản v3 giữ nguyên tên và cấu trúc startApp; chỉ thay lời gọi lấy Display bằng
+helper. Helper chỉ khôi phục liên kết khi context hiện hành trỏ đúng cùng MIDlet;
+không gán một MIDlet khác vào context. Mốc UI_READY ghi sau khi paint trả về.
 
-## Cách dùng trên Windows
+## Chạy thử
 
-1. Đóng toàn bộ cửa sổ game/giả lập cũ. Giải nén đầy đủ `Ninja251_MICRO_NST_GhiLog.zip` vào thư mục mới.
-2. Chép `MICRO_NST.jar` hoặc `microemulator.jar` vào đó, giữ tệp phụ trợ nếu bộ
-   giả lập có sẵn. Không cần tự tạo `lib`. Bộ này không bao gồm Java/giả lập.
-3. Chạy `CHAY_GHI_LOG.cmd`. Bộ chạy tự ưu tiên MICRO_NST nếu có cả hai tên.
-   Giữ `NST_TRACE_CHECK.jar` trong thư mục; file này tự kiểm tra bộ nạp và quyền
-   ghi tệp TRƯỚC khi mở cửa sổ game. Nó không gọi startApp của game và không
-   thực hiện đăng ký. Nếu kiểm tra thất bại, bộ chạy dừng và ghi lý do vào console log.
-   Nếu đạt, màn hình CMD hiện `KIEM TRA DA DAT` và trace có `TRACE_LOADER_READY`.
-4. Trong launcher, PHẢI chọn game có tên **251 PC LOG v2** rồi nhấn **Start**.
-   Nếu chỉ thấy tên `251` cũ, dùng menu **File** của giả lập để mở đúng
-   **251_Love_Atun_PC_LOG_v2.jar** vừa giải nén, rồi chọn game mới và Start.
-   Chữ `251` cũ có thể là mục đã lưu; không dùng mục đó để kiểm tra bản mới.
-5. Mở lại `dang-ky.log` bằng Notepad sau khi game đã Start. Phải thấy dòng chứa:
+1. Đóng tất cả cửa sổ giả lập cũ. Giải nén đầy đủ ZIP v3 vào một thư mục mới.
+2. Chép MICRO_NST.jar của bạn vào đó. Giữ tệp phụ trợ của giả lập nếu có;
+   không tự tạo lib. Bộ tải không bao gồm giả lập hay Java.
+3. Chạy CHAY_GHI_LOG.cmd. Giữ NST_TRACE_CHECK.jar cùng thư mục. Bộ chạy kiểm tra
+   loader/ghi tệp trước; nếu thất bại, gửi hai log, chưa cần thử đăng ký.
+4. Sau thông báo KIEM TRA DA DAT, giả lập mở ở launcher. Bản này không tự nạp
+   hoặc tự Start game. Vào menu File, chọn mở 251_Love_Atun_PC_LOG_v3.jar.
+5. Chọn đúng **251 PC LOG v3** rồi nhấn **Start một lần**. Không chọn mục v2 cũ.
+6. Đóng và mở lại dang-ky.log bằng Notepad. Chờ thấy:
 
 ```text
-[NSO_TRACE] ... TRACE_STARTED build=pc-file-v2 ...
+TRACE_UI_READY build=pc-file-v3
 ```
 
-Dòng TRACE_STARTED xác nhận bản có log đã được gọi startApp, chưa chứng minh
-kết nối máy chủ hay đăng ký thành công. TRACE_LOADER_READY mới chỉ xác nhận
-bước tự kiểm tra bộ nạp/ghi tệp đã đạt, game chưa được Start bởi bước đó. Chỉ các dòng NSO_TRACE_RUNNER/WAITING_FOR_TRACE_STARTED
-chưa phải sự kiện game. Notepad không tự cập nhật: đóng và mở lại tệp để xem mới.
+7. Sau khi thấy mốc trên và game hiển thị bình thường, thực hiện đăng ký tài khoản
+   thử. Chờ thông báo kết quả, đóng giả lập rồi gửi dang-ky.log và gia-lap-console.log,
+   kèm máy chủ, thứ tự nút bấm và thông báo kết quả. Tạo nhân vật là bước khác;
+   log cần bắt đầu từ trước thao tác đăng ký tài khoản.
 
-6. Sau khi thấy TRACE_STARTED, thực hiện đăng ký thử từ màn hình đăng ký tài khoản,
-   chờ kết quả rồi đóng giả lập. Gửi cả `dang-ky.log` và `gia-lap-console.log`,
-   kèm máy chủ, thứ tự thao tác và thông báo kết quả. Tạo nhân vật là bước khác;
-   cần giữ log từ trước khi bấm đăng ký tài khoản.
+Mỗi lần chạy CMD ghi đè hai tệp log; sao lưu trước khi chạy lại. Không mở nhiều
+phiên trong cùng thư mục. Notepad không tự cập nhật, hãy đóng/mở lại để xem mới.
 
-Mỗi lần chạy sẽ ghi đè hai tệp cũ. Sao lưu trước khi chạy lại. Không mở đồng thời
-nhiều phiên ghi cùng thư mục. Không mở game bằng bấm đúp JAR nếu muốn đặt vị trí
-log đúng như bộ chạy.
+## Các mốc
 
-## Tệp nằm ở đâu
+- TRACE_LOADER_READY: bộ nạp và ghi tệp đã qua tự kiểm tra, chưa Start game.
+- TRACE_CONTEXT_RESTORED: đã khôi phục đăng ký bị thiếu của đúng context hiện tại.
+- TRACE_CONTEXT_MISSING: không tìm được context phù hợp; không tự gán sai context.
+- TRACE_DISPLAY_READY: lấy được Display.
+- TRACE_UI_READY: một lần vẽ màn hình game đã trả về thành công. Mốc này không
+  xác nhận kết nối máy chủ hoặc đăng ký tài khoản thành công.
 
-- `dang-ky.log`: luồng game ghi trực tiếp, ngay cạnh file CMD.
-- `gia-lap-console.log`: kết quả tự kiểm tra, thông tin Java và stdout/stderr của giả lập.
-- `NST_TRACE_CHECK.jar`: bộ tự kiểm tra; giữ cùng CMD và game, không cần tự mở.
-- `251_Love_Atun_PC_LOG_v2.jar`: game bản ghi log mới, tên launcher 251 PC LOG v2.
+Nếu còn hộp lỗi, gửi cả hai log cùng ảnh hộp lỗi. Không chỉ dựa vào mốc
+TRACE_STARTED của bản cũ, vì nó chỉ cho biết đã vào hàm khởi động.
 
-Script truyền thuộc tính JVM `nso.trace.file` bằng đường dẫn tuyệt đối. Nếu giả
-lập không chuyển thuộc tính này tới game, helper thử tên `dang-ky.log` trong
-thư mục làm việc của JVM. Nếu vẫn không có TRACE_STARTED sau khi chọn đúng tên
-v2 và Start, gửi cả hai log cùng **MICRO_NST.jar** để phân tích bản giả lập.
-Nếu helper bị từ chối ghi tệp, nó thử báo `NSO_TRACE_FILE_ERROR` trên stderr
-(một số giả lập cũng có thể chuyển stderr ra nơi khác).
+## Tệp và dữ liệu
 
-Linux/macOS: `sh chay-ghi-log.sh`. Lệnh tương đương trên Windows:
+- dang-ky.log: luồng game ghi trực tiếp ngay cạnh CMD, không phụ thuộc console.
+- gia-lap-console.log: kết quả tự kiểm tra và đầu ra của giả lập/Java.
+- NST_TRACE_CHECK.jar: kiểm tra loader/quyền ghi; không thực hiện đăng ký.
+- Linux/macOS: sh chay-ghi-log.sh; sau đó mở game v3 từ menu File như trên.
 
-```bat
-java -Dfile.encoding=UTF-8 "-Dnso.trace.file=%CD%\dang-ky.log" -jar MICRO_NST.jar --openjar 251_Love_Atun_PC_LOG_v2.jar > gia-lap-console.log 2>&1
-```
+Log bổ sung chỉ ghi tên hàm, thời gian, tham số số nguyên và mã lệnh. Giá trị
+chuỗi, mật khẩu, OTP, tài khoản và payload không được ghi bởi phần bổ sung.
+Console sẵn có có thể chứa thông tin riêng tư: dùng tài khoản thử và kiểm tra/che
+trước khi gửi. Chưa có auto tạo tài khoản trong bản này.
 
-Giữ các tham số cấu hình riêng của bản giả lập nếu cần. Bản v2 có tên/vender khác
-để phân biệt trong launcher và có thể dùng RMS riêng, nên có thể cần chọn lại máy chủ.
+## Xác minh
 
-## Nội dung và quyền riêng tư
-
-Ghi thời gian, tên hàm, tham số số nguyên, mã gói tin gửi/đang xử lý; bỏ qua giá trị
-chuỗi và mảng byte. Không ghi bàn phím, tài khoản/mật khẩu/OTP hay payload trong
-phần bổ sung. Console sẵn có của game/giả lập có thể chứa thông tin riêng tư:
-đọc và che trước khi gửi; dùng tài khoản thử. Các mốc ENTER chỉ xác nhận vào hàm,
-không xác nhận máy chủ đã nhận hay chấp thuận đăng ký. Chưa có auto tạo tài khoản.
-
-## Kiểm tra
-
-- CRC JAR và cấu trúc 311 lớp; 259 hook, có startup hook.
-- Phân tích bytecode 1.211 phương thức trong 24 lớp đã sửa.
-- JVM -Xverify:all với helper thực đóng gói và bộ thử: tắt stdout/stderr vẫn ghi
-  tệp, đường dẫn có dấu cách/tiếng Việt, startup marker, metadata gói tin, truyền
-  chuỗi/mảng/long/double/float, static/return/ngoại lệ, không in chuỗi đầu vào,
-  ghi đồng thời, lỗi ghi tệp không làm dừng game, phục hồi và đường dẫn mặc định.
-- Bộ chạy shell: chọn tên giả lập, chuyển hướng console, đường dẫn tuyệt đối,
-  dấu xác nhận, tệp thiếu và mã thoát bằng Java mô phỏng.
-- Đã chạy bộ tự kiểm tra với bộ nạp/class preprocessor của MICRO_NST thật do người
-  dùng gửi. Đã tái hiện việc stdout của game bị tắt, xác minh logger trực tiếp
-  ghi được startup, event và mã gói tin sau biến đổi bytecode của giả lập.
-- Đã nạp 311 lớp game thật với initialize=false, không gọi code game/kết nối máy chủ.
-- Chưa chạy giao diện Windows, chưa kết nối máy chủ hay thực hiện đăng ký.
-  Hệ kiểm thử dùng Linux và Java 21; helper/checker tương thích bytecode Java 8.
+Phân tích bytecode, kiểm tra ZIP/JAR; giữ nguyên các phương thức vòng đời gốc,
+chỉ đổi một tham chiếu phương thức trong startApp. Đã khởi động game thật bằng
+MICRO_NST được cung cấp ở chế độ headless và thấy TRACE_DISPLAY_READY/UI_READY.
+Đã tái hiện đúng NullPointerException của Display.getDisplay khi thiếu đăng ký,
+xác minh helper khôi phục đúng context và từ chối context sai. Phép thử chặn toàn
+bộ kết nối mạng, không tạo tài khoản. Chưa thử giao diện Windows hay máy chủ.
