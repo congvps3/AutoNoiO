@@ -15,28 +15,28 @@ if not defined NSO_EMULATOR_JAR (
   pause
   exit /b 1
 )
-if not exist "251_Love_Atun_AUTO_NEW_v5.jar" (
-  echo Can 251_Love_Atun_AUTO_NEW_v5.jar. Hay giai nen du bo ZIP auto v5.
+if not exist "251_Love_Atun_AUTO_NEW_v6.jar" (
+  echo Can 251_Love_Atun_AUTO_NEW_v6.jar. Hay giai nen du bo ZIP auto v6.
   pause
   exit /b 1
 )
 if not exist "NSO_AUTO_CHECK.jar" (
-  echo Can NSO_AUTO_CHECK.jar. Hay giai nen du bo ZIP auto v5.
+  echo Can NSO_AUTO_CHECK.jar. Hay giai nen du bo ZIP auto v6.
   pause
   exit /b 1
 )
-echo NSO_AUTO_RUNNER build=auto-new-v5 emulator=%NSO_EMULATOR_JAR% > "dang-ky.log"
-echo NSO_AUTO_CONSOLE build=auto-new-v5 > "gia-lap-console.log"
+echo NSO_AUTO_RUNNER build=auto-new-v6 emulator=%NSO_EMULATOR_JAR% > "dang-ky.log"
+echo NSO_AUTO_CONSOLE build=auto-new-v6 > "gia-lap-console.log"
 java -version >> "gia-lap-console.log" 2>&1
 echo Dang kiem tra bo nap va quyen ghi tep...
-java -jar "NSO_AUTO_CHECK.jar" "%NSO_EMULATOR_JAR%" "251_Love_Atun_AUTO_NEW_v5.jar" "%~dp0dang-ky.log" >> "gia-lap-console.log" 2>&1
+java -jar "NSO_AUTO_CHECK.jar" "%NSO_EMULATOR_JAR%" "251_Love_Atun_AUTO_NEW_v6.jar" "%~dp0dang-ky.log" >> "gia-lap-console.log" 2>&1
 if errorlevel 1 (
   echo KIEM TRA CHUA DAT. Xem gia-lap-console.log.
   pause
   exit /b 1
 )
-echo Vao File mo 251_Love_Atun_AUTO_NEW_v5.jar.
-echo Chon 251 AUTO NEW v5 va nhan Start mot lan.
+echo Vao File mo 251_Love_Atun_AUTO_NEW_v6.jar.
+echo Chon 251 AUTO NEW v6 va nhan Start mot lan.
 echo Chon may chu; o man hinh Choi moi, dien bang tai khoan va bam Bat dau danh sach.
 echo Auto doc ma dang hien thi; neu chua doc duoc, co the nhap tay trong GAME.
 java -Dfile.encoding=UTF-8 "-Dnso.trace.file=%~dp0dang-ky.log" -jar "%NSO_EMULATOR_JAR%" >> "gia-lap-console.log" 2>&1

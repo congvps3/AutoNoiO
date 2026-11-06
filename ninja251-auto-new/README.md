@@ -1,16 +1,18 @@
-# Ninja 251 — Auto danh sách v5 trên máy tính
+# Ninja 251 — Auto danh sách v6 trên máy tính
 
-V5 chạy lần lượt nhiều tài khoản từ bảng nhập, tự sinh tên nhân vật tạm, đọc mã xác nhận đang hiển thị, tạo nhân vật chính và đăng xuất về **Chơi mới** trước lượt kế tiếp. Dành cho Java 8 và `MICRO_NST.jar` đã gửi; giao diện Swing chạy trên máy tính.
+V6 thêm nút **Thêm file TXT** để đọc danh sách UTF-8/BOM và tạo nhân vật chính **Nam, phái Kiếm**. Auto chạy lần lượt nhiều tài khoản từ bảng nhập, tự sinh tên nhân vật tạm, đọc mã xác nhận đang hiển thị, tạo nhân vật chính và đăng xuất về **Chơi mới** trước lượt kế tiếp. Dành cho Java 8 và `MICRO_NST.jar` đã gửi; giao diện Swing chạy trên máy tính.
 
 ## Chạy bản mới
 
-1. Đóng các cửa sổ NST/CMD cũ. Giải nén toàn bộ `Ninja251_AUTO_TaoTaiKhoan_v5.zip` vào thư mục mới.
+1. Đóng các cửa sổ NST/CMD cũ. Giải nén toàn bộ `Ninja251_AUTO_TaoTaiKhoan_v6.zip` vào thư mục mới.
 2. Chép `MICRO_NST.jar` của bạn vào cùng thư mục rồi chạy `CHAY_AUTO.cmd`.
-3. Trong giả lập chọn File → mở `251_Love_Atun_AUTO_NEW_v5.jar`, chọn **251 AUTO NEW v5** và Start một lần.
+3. Trong giả lập chọn File → mở `251_Love_Atun_AUTO_NEW_v6.jar`, chọn **251 AUTO NEW v6** và Start một lần.
 4. Chọn máy chủ, để game ở màn hình **Chơi mới**. Bảng Auto tự mở; có thể bấm **F6** khi đang chọn cửa sổ giả lập để gọi lại.
 5. Điền bảng rồi bấm **Bắt đầu danh sách**. Mỗi hàng là một lượt; chạy hết hàng đã nhập thì dừng tại màn hình Chơi mới.
 
 ## Nhập nhiều tài khoản
+
+Bấm **Thêm file TXT** rồi chọn tệp `.txt` mã hóa UTF-8, mỗi dòng `taikhoan|matkhau|tennhanvatchinh`. Không thêm tiêu đề. Tệp được đọc/kiểm tra định dạng trước khi thêm vào bảng; nếu lỗi định dạng thì dữ liệu đang có không bị thay đổi. Các dòng mới điền vào hàng trống rồi được nối tiếp vào danh sách.
 
 Bảng có ba cột nhập **Tài khoản**, **Mật khẩu**, **Nhân vật chính** và cột **Kết quả**. Nhấp vào ô để nhập. Mật khẩu được che trên bảng. Bấm **Thêm dòng** hoặc chọn các hàng rồi **Xóa dòng**.
 
@@ -29,7 +31,7 @@ Giới hạn kiểm tra của bản auto: tài khoản 3–24 chữ/số/`_`, b�
 
 Chơi mới → tạo nhân vật tạm → vào game → NPC Admin → Tài khoản → Đăng ký → điền tài khoản/mật khẩu → đọc và điền mã đang hiển thị → chờ xác nhận đăng ký thành công → đăng nhập tài khoản mới → tạo và vào đúng nhân vật chính → đóng phiên kết nối và trở về Chơi mới.
 
-Chỉ sau khi màn hình Chơi mới đã trở lại và kết nối cũ đã đóng, auto mới chờ khoảng một giây rồi bắt đầu hàng kế tiếp. Tên tạm mới gồm 11 chữ thường/số, bắt đầu bằng `t`, được sinh lại sau mỗi lượt và tránh trùng với các tên chính trong danh sách. Ô tên tạm chỉ hiển thị tên đang dùng/chuẩn bị dùng. Kiểu nhân vật theo mặc định game.
+Chỉ sau khi màn hình Chơi mới đã trở lại và kết nối cũ đã đóng, auto mới chờ khoảng một giây rồi bắt đầu hàng kế tiếp. Tên tạm mới gồm 11 chữ thường/số, bắt đầu bằng `t`, được sinh lại sau mỗi lượt và tránh trùng với các tên chính trong danh sách. Ô tên tạm chỉ hiển thị tên đang dùng/chuẩn bị dùng. Nhân vật chính được đặt **Nam + Kiếm** ngay trước khi gửi thao tác tạo; nhân vật tạm dùng mặc định game.
 
 Auto đọc mã 6 chữ/số cùng phần tiêu đề xác thực mà game đang vẽ. Không đoán mã hoặc thử nhiều giá trị. Nếu chưa nhận ra phần mã đang hiển thị, bảng báo đang chờ; bạn có thể nhập trực tiếp trong game và bấm Đồng ý để tiếp tục. Bước chờ này tối đa 5 phút. Các bước khác tối đa 60 giây.
 
@@ -49,7 +51,7 @@ Hai tệp chẩn đoán `dang-ky.log` và `gia-lap-console.log` cũng nằm cạ
 
 Đã kiểm tra mô phỏng hai tài khoản liên tiếp, điều kiện chờ đăng xuất/ngắt kết nối, sinh tên tạm, tự điền đúng một mã đã đọc, xác nhận thành công trước khi lưu, hàng lỗi và khôi phục, hủy danh sách, lỗi lưu file và kiểm tra toàn bộ đầu vào.
 
-Đã kiểm tra với chính JAR game và `MICRO_NST.jar` ở chế độ không giao diện, mạng bị chặn: game khởi động/vẽ, callback menu/ô nhập, thao tác đăng xuất về Chơi mới và lấy mã mẫu qua hàm vẽ chữ gốc. Dữ liệu kiểm thử là dữ liệu giả và không có trong ZIP.
+Đã kiểm tra với chính JAR game và `MICRO_NST.jar` ở chế độ không giao diện, mạng bị chặn: game khởi động/vẽ, callback menu/ô nhập, kiểm tra lựa chọn Nam/Kiếm trên lớp game gốc, đọc file UTF-8 bằng bộ nạp thật, thao tác đăng xuất về Chơi mới và lấy mã mẫu qua hàm vẽ chữ gốc. Dữ liệu kiểm thử là dữ liệu giả và không có trong ZIP.
 
 **Chưa kiểm thử giao diện Windows và đăng ký thực trên máy chủ.** Nếu máy chủ thay đổi NPC, menu hoặc định dạng hiển thị mã thì cần cập nhật. Có thể nhập mã tay khi phần đọc tự động chưa nhận ra.
 

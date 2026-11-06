@@ -1,15 +1,13 @@
-Ninja 251 AUTO NEW v5 - finite registration queue
+Ninja 251 AUTO NEW v6 - TXT import and male/Kiem main character
 
-Features: multi-row account/password/final-character table, masked password cells, pipe/TSV clipboard import, full-list validation; new random temporary character after each processed row; currently rendered verification text capture and single code submission; final-character world confirmation then logout to disconnected New Game; one-second gap between rows; recovery after failed rows; stop on result-file errors or failed cleanup. Confirmed-account export remains append-only.
+Changes: Add TXT file button, UTF8/BOM support, CRLF/LF parser and atomic file parsing before table changes. Fill empty rows then append, preserve password spacing, disable import while a queue runs. Main-character create sets male gender1, first male appearance2, Kiem class1 immediately before original create action. Temporary characters keep default/original choices.
 
-PASS: pure workflow tests including manual fallback and automatic code submission once, explicit registration acknowledgement before saving, final-character verification and logout.
-PASS: two-account replay; next row blocked until LOGIN plus disconnected session; regenerated temporary names; per-row outcomes/progress; failure recovery; cancellation and secret clearing; whole-list duplicate/format validation; stop on storage errors.
-PASS: visible-text parser requires current challenge title and a six-character token; expiry/reset; rejects overlong/ambiguous tokens.
-PASS: actual uploaded MICRO_NST with network disabled: original game startup/paint; overloaded screen/menu/input bindings; original session logout reaches disconnected New Game; synthetic code captured through original font renderer and filled using original input widget/callback. Synthetic callback never sends an account request.
-PASS: pipe/TSV parser and readable validation labels loaded through the actual emulator.
-PASS: account file UTF8/BOM, Unicode trace-relative paths, append/preservation, no password, malformed record rejection and write-error propagation.
-PASS: 339-class JAR structure, no duplicate method signatures; Java 8 target helper compilation and legacy conversion; real preprocessor loads all auto classes; game wrapper bytecode checks (1229 methods, 25 patched classes, 261 wrappers).
-PASS: 9 launcher mock scenarios; real preflight success, wrong-JAR rejection, unwritable trace rejection; shell syntax and CMD quoting/CRLF.
+PASS: isolated TXT import tests: UTF8/BOM, Unicode path, CRLF/LF, password spacing, malformed-file atomicity, append/preservation, strict invalid-UTF8 rejection, TSV compatibility.
+PASS: real uploaded MICRO_NST, network blocked: UTF8 file decoding through actual MIDlet loader; expected male/Kiem labels and original fields; original screen/menu/input/rendered-code/logout/result-export contracts inherited from v5.
+PASS: test-only service-capture fixture invoked production create(name,true) through original widget/action, captured (name,1,2,1); create(name,false) preserved (name,0,28,6). Public service capture returned without queuing a packet. Production JAR unchanged by this test.
+PASS: updated flow/batch simulations; main-character option applied only to main creation; sequential accounts, return-to-login gate, result integrity and cancellation.
+PASS: Java8 build and legacy conversion, JAR class structure (340 classes), real preprocessor load; wrapper bytecode verification (261 wrappers).
+PASS: nine launcher scenarios, real checker success/wrong-JAR/write-failure, shell syntax and CMD CRLF/quoting.
 
-NOT TESTED HERE: Windows UI interactions, actual clipboard/keyboard events on Windows, and live game-server registration. Rendering/input and account-file tests used synthetic fixtures only.
-No real accounts were created. User videos/logs, credentials and private result files are excluded from the ZIP and repository commit.
+NOT TESTED HERE: Windows file-picker/GUI interactions and live game-server registration. All test accounts/codes were synthetic fixtures; no real account created.
+User credentials, logs/video, synthetic result files and test-only service-capture JAR are excluded from this package.
